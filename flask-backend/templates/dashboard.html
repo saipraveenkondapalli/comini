@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>News Dashboard</title>
+</head>
+
+<body>
+    <h1 class="text-center mt-5 mb-5">News Dashboard</h1>
+    <div class="text-center mt-2 mb-5">
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Original Headline</th>
+                    <th>New Headline</th>
+                    <th>Original Summary</th>
+                    <th>New Summary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.new_title }}</td>
+                    <td>{{ article.summary }}</td>
+                    <td>{{ article.new_summary }}</td>
+                    <td><a href="{{ article.url }}" class="btn btn-primary">Read More</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>
