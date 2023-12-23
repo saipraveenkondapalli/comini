@@ -9,9 +9,7 @@ import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config[
-    "SQLALCHEMY_DATABASE_URI"
-] = os.environ.get("SQLALCHEMY_DATABASE_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
 app
 db = SQLAlchemy(app)
 
@@ -20,6 +18,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 login_manger = LoginManager()
 login_manger.init_app(app)
+login_manger.login_view = "login"
 
 
 class NewsArticle(db.Model):
@@ -42,6 +41,11 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(80), primary_key=True)
     password = db.Column(db.Text, nullable=False)
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return redirect("/login")
 
 
 @app.route("/dashboard", methods=["GET"])
@@ -71,6 +75,7 @@ def login():
 @app.route("/logout", methods=["GET"])
 def logout():
     logout_user()
+    return redirect("/")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -101,5 +106,3 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run()
-
-
